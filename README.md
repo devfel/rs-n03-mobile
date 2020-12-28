@@ -3,7 +3,7 @@
  <img  src="https://devfel.com/imgs/devfel-logo-01.JPG" alt="DevFel"></a>
 </p>
 
-<h1 align="center">RS Level 03 Mobile-Front-End</h1>
+<h1 align="center">RS Level 03 - Mobile-Front-End</h1>
 <h3 align="center">GoBarber - Mobile Version</h3>
 
 ---
