@@ -16,10 +16,14 @@ const SignIn: React.FC = () => {
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ flex: 1 }}>
           <Container>
             <Image source={logoImg} />
+
             <View>
               <Title>Faça seu logon</Title>
             </View>
+
             <Input name="email" icon="mail" placeholder="E-mail" />
+            <Input name="password" icon="lock" placeholder="Senha" />
+
             <Button onPress={() => console.log("Deu")}>Entrar</Button>
 
             <ForgotPassword onPress={() => {}}>
