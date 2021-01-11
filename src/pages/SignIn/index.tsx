@@ -1,22 +1,37 @@
-import React, { useCallback, useRef } from "react";
-import { Alert, Image, View, KeyboardAvoidingView, ScrollView, Platform, TextInput } from "react-native";
-import Icon from "react-native-vector-icons/Feather";
-import { useNavigation } from "@react-navigation/native";
-import * as Yup from "yup";
+import React, { useCallback, useRef } from 'react';
+import {
+  Image,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  TextInput,
+  Alert,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
+import * as Yup from 'yup';
 
-import { Form } from "@unform/mobile";
-import { FormHandles } from "@unform/core";
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 
-import { useAuth } from "../../hooks/auth";
+import { useAuth } from '../../hooks/auth';
 
-import getValidationErrors from "../../utils/getValidationErrors";
+import getValidationErrors from '../../utils/getValidationErrors';
 
-import Input from "../../components/Input";
-import Button from "../../components/Button";
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
-import logoImg from "../../assets/logo.png";
+import logoImg from '../../assets/logo.png';
 
-import { Container, Title, ForgotPassword, ForgotPasswordText, CreateAccountButton, CreateAccountButtonText } from "./styles";
+import {
+  Container,
+  Title,
+  ForgotPassword,
+  ForgotPasswordText,
+  CreateAccountButton,
+  CreateAccountButtonText,
+} from './styles';
 
 interface SignInFormData {
   email: string;
@@ -26,6 +41,7 @@ interface SignInFormData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
+
   const navigation = useNavigation();
 
   const { signIn } = useAuth();
@@ -36,8 +52,10 @@ const SignIn: React.FC = () => {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          email: Yup.string().email("Digite um e-mail válido").required("E-mail obrigatório"),
-          password: Yup.string().required("Senha obrigatória"),
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().required('Senha obrigatória'),
         });
 
         await schema.validate(data, {
@@ -52,21 +70,33 @@ const SignIn: React.FC = () => {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
+          console.log(errors);
+
           formRef.current?.setErrors(errors);
 
           return;
         }
 
-        Alert.alert("Erro na autenticação", "Ocorreu um erro ao fazer login, cheque as credenciais.");
+        Alert.alert(
+          'Erro na autenticação',
+          'Ocorreu um erro ao fazer login, cheque as credenciais.',
+        );
       }
     },
-    [signIn]
+    [signIn],
   );
 
   return (
     <>
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : undefined} enabled>
-        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled
+      >
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ flex: 1 }}
+        >
           <Container>
             <Image source={logoImg} />
 
@@ -74,7 +104,7 @@ const SignIn: React.FC = () => {
               <Title>Faça seu logon</Title>
             </View>
 
-            <Form style={{ width: "100%" }} ref={formRef} onSubmit={handleSignIn}>
+            <Form ref={formRef} onSubmit={handleSignIn}>
               <Input
                 autoCorrect={false}
                 autoCapitalize="none"
@@ -116,9 +146,8 @@ const SignIn: React.FC = () => {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <CreateAccountButton onPress={() => navigation.navigate("SignUp")}>
+      <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
         <Icon name="log-in" size={20} color="#ff9000" />
-
         <CreateAccountButtonText>Criar uma conta</CreateAccountButtonText>
       </CreateAccountButton>
     </>
